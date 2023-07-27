@@ -8,7 +8,7 @@ from simfile.notes import NoteData
 from simfile.notes.count import *
 
 
-class chartdata:
+class ChartData:
     def __init__(self):
         self.b = '-'
         self.bn = 0
@@ -20,6 +20,9 @@ class chartdata:
         self.hn = 0
         self.c = '-'
         self.cn = 0
+
+    def AddChartMeter(self, chart, meter):
+        self.c = meter
 
 
 def get_folder_dialog():
@@ -35,7 +38,6 @@ if __name__ == '__main__':
         fieldnames = ['Pack', 'Song', 'Artist', 'StepArtist',
                       'BPM', 'Challenge', 'C-Steps', 'Hard', 'H-Steps',
                       'Medium', 'M-Steps', 'Easy', 'E-Steps', 'Beginner', 'B-Steps']
-        #csv.field_size_limit(30)
         output = csv.DictWriter(csvfile, delimiter='\t', fieldnames=fieldnames)
         output.writeheader()
         for (dirpath, dirnames, filenames) in os.walk(_path):
@@ -46,7 +48,7 @@ if __name__ == '__main__':
                     sim = simfile.open(os.path.join(dirpath, f))
                     Pack = os.path.basename(Path(smPath).parents[1])
 
-                    cb = chartdata()
+                    cb = ChartData()
                     for (chart) in sim.charts:
                         if chart.difficulty == 'Beginner':
                             cb.b = chart.meter
